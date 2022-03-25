@@ -1,0 +1,154 @@
+<?php
+
+use Verfacto\Magento\ViewModel\Verfacto;
+use Magento\Backend\Block\Template;
+
+/**
+ * @var Template $block
+ * @var Verfacto $viewModel
+ */
+
+$viewModel = $block->getData('viewModel'); ?>
+<div class="verfacto-container">
+    <div class="block">
+        <div class="label">
+            <div class="label-text">
+                <img class="verfacto-img" src="<?php echo $this->getViewFileUrl('Verfacto_Magento::images/logo.svg'); ?>" alt=""/>
+                <div class="verfacto-title">
+                    <span class="verfacto-title-text">
+                        <?= $block->escapeHtml(__('Verfacto')) ?>
+                    </span>
+                    <span class="verfacto-text">
+                        <?= $block->escapeHtml(__('See the full picture of your marketing and get daily insights on how to improve it.')) ?>
+                    </span>
+                </div>
+            </div>
+        </div>
+    <?php if (!$viewModel->checkIntegration()):?>
+        <div class="banner">
+            <div class="banner-block-text">
+                <span class="banner-text"><?= $block->escapeHtml(__('Plugin integration is pending')) ?></span>
+            </div>
+            <div class="banner-image">
+                <img src="<?php echo $this->getViewFileUrl('Verfacto_Magento::images/Ellipse.svg'); ?>" alt="">
+            </div>
+        </div>
+        <div class="integration-form">
+            <form method="post" id="login-form" action="<?= $viewModel->getActionUrl(); ?>">
+                <fieldset class="admin__fieldset">
+                    <input name="form_key" type="hidden" value="<?= $block->escapeHtmlAttr($block->getFormKey()) ?>" />
+                    <div class="admin__field admin__field-text">
+                        <label class="admin__field-label">
+                            <?= $block->escapeHtmlAttr(__('Please enter your account details to finish integration')) ?>
+                        </label>
+                    </div>
+                    <div class="admin__field admin-vefacto-account">
+                        <a target="_blank"
+                           href="https://backoffice.verfacto.com/signup?pluginPath=<?= $viewModel->getModuleUrl(); ?>&accountName=<?= $viewModel->getAccountName(); ?>&platform=magento">
+                            <?= $block->escapeHtmlAttr(__('Don\'t have an account? Click here to sign up')) ?>
+                        </a>
+                    </div>
+                    <div class="admin__field _required field-email">
+                        <label for="email" class="admin__field-label">
+                            <span><?= $block->escapeHtml(__('Email')) ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <input id="email"
+                                   class="admin__control-text verfacto-email"
+                                   type="email"
+                                   name="email"
+                                   autofocus
+                                   value=""
+                                   data-validate="{required:true}"
+                                   autocomplete="off"
+                            />
+                        </div>
+                    </div>
+                    <div class="admin__field _required field-password">
+                        <label for="login" class="admin__field-label">
+                            <span><?= $block->escapeHtml(__('Password')) ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <input id="login"
+                                   class="admin__control-text verfacto-password"
+                                   type="password"
+                                   name="password"
+                                   data-validate="{required:true}"
+                                   value=""
+                                   autocomplete="off"
+                            />
+                        </div>
+                    </div>
+                    <div class="admin__field admin-vefacto-account">
+                        <a target="_blank"
+                           href="https://backoffice.verfacto.com/forgot-password?accountName=<?= $viewModel->getAccountName() ?>&platform=magento">
+                            <?= $block->escapeHtmlAttr(__('Forgot your password?')) ?>
+                        </a>
+                    </div>
+                    <div class="form-actions">
+                        <div class="actions">
+                            <button
+                                class="action-login action-primary verfacto-integration">
+                                <span><?= $block->escapeHtml(__('Integrate')) ?></span>
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    <?php else:?>
+        <div class="banner">
+            <div class="banner-block-text">
+                <span class="banner-text"><?= $block->escapeHtml(__('Plugin is fully integrated')) ?></span>
+            </div>
+            <div class="banner-image">
+                <img src="<?php echo $this->getViewFileUrl('Verfacto_Magento::images/Ellipse.svg'); ?>" alt="">
+            </div>
+        </div>
+        <div class="link">
+            <div class="button">
+                <a href="https://backoffice.verfacto.com/login/?accountName=<?= $viewModel->getAccountName() ?>"
+                   target="_blank"
+                   type="button"
+                   class="verfacto-button">
+                    <?= $block->escapeHtml(__('Open Verfacto')) ?>
+                </a>
+            </div>
+        </div>
+    <?php endif;?>
+    </div>
+    <div class="help-links">
+        <div class="help-title">
+            <h3><?= $block->escapeHtml(__('Having troubles?')); ?></h3>
+        </div>
+        <div class="information">
+            <div class="link-info">
+                <a href="https://www.youtube.com/watch?v=g0zwomwuRWg" target="_blank"><?= $block->escapeHtml(__('Watch an explanatory video')); ?></a>
+            </div>
+            <div class="link-info">
+                <a href="mailto:support@verfacto.com" target="_blank"><?= $block->escapeHtml(__('Contact support')); ?></a>
+            </div>
+            <div class="link-info">
+                <a href="https://www.verfacto.com/book-demo/"
+                   target="_blank"><?= $block->escapeHtml(__('Book a demo')); ?>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let input = document.querySelector(".verfacto-email")
+    let button = document.querySelector(".verfacto-integration")
+
+    button.disabled = true
+
+    input.addEventListener("change", stateHandle)
+
+    function stateHandle() {
+        if (document.querySelector(".verfacto-email").value === "") {
+            button.disabled = true
+        } else {
+            button.disabled = false
+        }
+    }
+</script>

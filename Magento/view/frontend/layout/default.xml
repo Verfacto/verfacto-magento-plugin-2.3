@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="head.additional">
+            <block name="verfacto.head" template="Verfacto_Magento::verfacto/link/link.phtml" >
+                <arguments>
+                    <argument name="viewModel" xsi:type="object">Verfacto\Magento\ViewModel\Link</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Verfacto\Magento\Api\Data\VerfactoInterface"
+                type="Verfacto\Magento\Model\Verfacto" />
+    <preference for="Verfacto\Magento\Api\Data\VerfactoSearchResultInterface"
+                type="Verfacto\Magento\Model\VerfactoSearchResult" />
+    <preference for="Verfacto\Magento\Api\VerfactoManagerInterface"
+                type="Verfacto\Magento\Model\VerfactoManager" />
+    <preference for="Verfacto\Magento\Api\VerfactoRepositoryInterface"
+                type="Verfacto\Magento\Model\VerfactoRepository" />
+    <preference for="Magento\Checkout\Block\Onepage\Success"
+                type="Verfacto\Magento\Block\Onepage\VerfactoSuccess" />
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="vefacto_magento_coctomer"
+                type="Verfacto\Magento\Plugin\CustomerData\CustomerInfo" />
+    </type>
+    <type name="Magento\Framework\Module\Status">
+        <plugin name="vefacto_magento_module_disable_status"
+                type="Verfacto\Magento\Plugin\Module\DisableStatus" />
+    </type>
+</config>

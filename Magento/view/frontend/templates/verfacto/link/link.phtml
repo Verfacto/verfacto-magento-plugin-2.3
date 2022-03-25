@@ -1,0 +1,106 @@
+<?php
+
+use Magento\Framework\View\Element\Template;
+use Verfacto\Magento\ViewModel\Link;
+
+/**
+ * @var Template $block
+ * @var Link $viewModel
+ */
+
+$viewModel = $block->getData('viewModel');
+?>
+
+<?php if ($trackingId = $viewModel->getTrackingId()): ?>
+    <script>
+        require(['jquery', 'Magento_Customer/js/customer-data', 'verfacto-entry-point', 'domReady!'],
+            function ($, customerData) {
+            window.VerfactoTracker.init('<?= $trackingId;?>');
+            $(document).on('ajax:addToCart', function(e, data) {
+                const cartBeforeUpdate = customerData.get('cart')();
+                let checkCustomerInterval = setInterval(function () {
+                    const customerInfo = customerData.get('cart')();
+                    const productInfoArr = [];
+                    let productType = '';
+                    let qty = 1;
+                    if (document.getElementById('qty')) {
+                        qty = document.getElementById('qty').value;
+                    }
+                    if (customerInfo && customerInfo.items) {
+                        if (cartBeforeUpdate && cartBeforeUpdate.items && cartBeforeUpdate.items.length > 0 && customerInfo.items.length === cartBeforeUpdate.items.length) {
+                            for (let i = 0; i < customerInfo.items.length; i++) {
+                                if (customerInfo.items[i].qty !== cartBeforeUpdate.items[i].qty &&
+                                    customerInfo.items[i].product_type === 'grouped') {
+                                    if (document.getElementsByName("super_group[" + customerInfo.items[i].product_id + "]")[0].value) {
+                                        qty = document.getElementsByName("super_group[" + customerInfo.items[i].product_id + "]")[0].value;
+                                    }
+                                    productInfoArr["name"] = customerInfo.items[i].product_name;
+                                    productInfoArr["price"] = customerInfo.items[i].product_price_value;
+                                    productInfoArr["sale_price"] = '';
+                                    productInfoArr["quantity"] = qty;
+                                    productInfoArr["sku"] = customerInfo.items[i].product_sku;
+                                    window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", JSON.stringify(Object.assign({}, productInfoArr)));
+                                    productType = 'grouped';
+                                } else if (customerInfo.items[i].qty !== cartBeforeUpdate.items[i].qty) {
+                                    productInfoArr["name"] = customerInfo.items[i].product_name;
+                                    productInfoArr["price"] = customerInfo.items[i].product_price_value;
+                                    productInfoArr["sale_price"] = '';
+                                    productInfoArr["quantity"] = qty;
+                                    productInfoArr["sku"] = customerInfo.items[i].product_sku;
+                                    break;
+                                }
+                            }
+                        } else {
+                            for (let i = 0; i < customerInfo.items.length; i++) {
+                                if (customerInfo.items[i].product_type === 'grouped' &&
+                                    data.productIds.includes(customerInfo.items[i].product_id)) {
+                                    if (document.getElementsByName("super_group[" + customerInfo.items[i].product_id + "]")[0].value) {
+                                        qty = document.getElementsByName("super_group[" + customerInfo.items[i].product_id + "]")[0].value;
+                                    }
+                                    productInfoArr["name"] = customerInfo.items[i].product_name;
+                                    productInfoArr["price"] = customerInfo.items[i].product_price_value;
+                                    productInfoArr["sale_price"] = '';
+                                    productInfoArr["quantity"] = qty;
+                                    productInfoArr["sku"] = customerInfo.items[i].product_sku;
+                                    window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", JSON.stringify(Object.assign({}, productInfoArr)));
+                                    productType = 'grouped';
+                                } else if (customerInfo.items[i].product_type === 'bundle' &&
+                                    data.productIds.includes(customerInfo.items[i].product_id)) {
+                                    productInfoArr["name"] = customerInfo.items[i].product_name;
+                                    productInfoArr["price"] = customerInfo.items[i].product_price_value;
+                                    productInfoArr["sale_price"] = '';
+                                    productInfoArr["quantity"] = qty;
+                                    productInfoArr["sku"] = customerInfo.items[i].product_sku;
+                                } else if (customerInfo.items[i].product_id &&
+                                    data.productIds[data.productIds.length - 1] ===
+                                    customerInfo.items[i].product_id
+                                ) {
+                                    productInfoArr["name"] = customerInfo.items[i].product_name;
+                                    productInfoArr["price"] = customerInfo.items[i].product_price_value;
+                                    productInfoArr["sale_price"] = '';
+                                    productInfoArr["quantity"] = qty;
+                                    productInfoArr["sku"] = customerInfo.items[i].product_sku;
+                                    break;
+                                }
+                            }
+                        }
+                        console.log(productInfoArr);
+                        if (productType !== 'grouped') {
+                            window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", JSON.stringify(Object.assign({}, productInfoArr)));
+                        }
+                        clearInterval(checkCustomerInterval);
+                    }
+                }, 2000);
+            });
+            if (document.readyState !== "loading") {
+                let checkLoginInterval = setInterval(function () {
+                    const email = customerData.get('customer')().email;
+                    if (email) {
+                        window.VerfactoTracker.identify("<?= $trackingId;?>", email);
+                    }
+                    clearInterval(checkLoginInterval);
+                }, 2000);
+            }
+        });
+    </script>
+<?php endif;?>

@@ -1,0 +1,31 @@
+<?php
+
+use Magento\Checkout\Block\Onepage\Success;
+use Verfacto\Magento\ViewModel\Link;
+
+/**
+ * @var Success $block
+ * @var Link $viewModel
+ */
+
+$viewModel = $block->getData('viewModel');
+?>
+
+<?php if ($trackingId = $viewModel->getTrackingId()): ?>
+    <script>
+        require(['jquery', 'Magento_Customer/js/customer-data', 'verfacto-entry-point', 'domReady!'], function ($, customerData) {
+            if (document.readyState !== "loading") {
+                let checkLoginInterval = setInterval(function () {
+                    const email = customerData.get('customer')().email;
+                    if (email) {
+                        window.VerfactoTracker.identify("<?= $trackingId;?>", email);
+                    } else {
+                        window.VerfactoTracker.identify("<?= $trackingId;?>", "<?= $block->getEmail();?>");
+                    }
+                    window.VerfactoTracker.track("<?= $trackingId;?>", "place_order");
+                    clearInterval(checkLoginInterval);
+                }, 2000);
+            }
+        });
+    </script>
+<?php endif;?>

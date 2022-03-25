@@ -1,0 +1,153 @@
+.label .label-text {
+    padding-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.label-text .verfacto-text {
+    padding-left: 10px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+.verfacto-title-text {
+    padding-left: 10px;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 35px;
+}
+
+.label-text .verfacto-img {
+    vertical-align:middle;
+}
+
+.banner {
+    max-width: 700px;
+    height: 108px;
+    background-color: #373330;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+}
+
+.banner-block-text .banner-text {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 44px;
+}
+
+.banner-block-text {
+    padding: 32px 0 0 40px;
+}
+
+.block .link {
+    max-width: 700px;
+    height: 108px;
+    background-color: #f5f5f5;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    border-color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.banner-image {
+    order: 999;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: -4px;
+}
+
+.link .button {
+    background-color: #FF006B;
+    border-radius: 4px 4px 0 0;
+    height: 33px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-left: 40px;
+}
+
+.verfacto-button {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 10px;
+    color: #ffffff;
+    line-height: 19px;
+}
+
+.verfacto-button:hover {
+    text-decoration: none;
+    color: #d6c8c8;
+    border-color: #FF006B;
+    box-shadow: 0 0 0 1px #FF006B;
+}
+
+.verfacto-container .verfacto-integration {
+    background-color: #FF006B;
+    border-color: #FF006B;
+}
+
+.verfacto-container .verfacto-integration:hover {
+    text-decoration: none;
+    color: #d6c8c8;
+    border-color: #FF006B;
+    box-shadow: 0 0 0 1px #FF006B;
+}
+
+.verfacto-container .verfacto-integration:disabled {
+    border: 1px solid #b7ab9e;
+    background-color: #b7ab9e;
+    color: #ffffff;
+}
+
+.block .integration-form {
+    max-width: 700px;
+    background-color: #f5f5f5;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    border-color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.block .integration-form .admin__fieldset .admin__field {
+    margin: 0;
+}
+
+.block .integration-form .admin__fieldset .admin__field-control {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.block .integration-form .admin__fieldset .admin__field-text {
+    margin-top: 15px;
+}
+
+.block .integration-form .admin__fieldset .admin__field .admin__field-label {
+    width: auto;
+}
+
+.block .integration-form .admin__fieldset .form-actions {
+    margin: 35px 0 20px 30px;
+}
+
+.block .integration-form .admin__fieldset .admin-vefacto-account {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.help-links .help-title {
+    margin-top: 25px;
+}
+
+.help-links .information .link-info {
+    margin-bottom: 5px;
+}
+
+.verfacto-title {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Verfacto_Magento::integration"
+             title="Analytics &amp; Insights"
+             translate="title"
+             module="Verfacto_Magento"
+             sortOrder="10"
+             parent="Magento_Backend::marketing"
+             resource="Verfacto_Magento::integration"
+        />
+        <add id="Verfacto_Magento::integration_verfacto"
+             title="Verfacto Data Analytics"
+             translate="title"
+             sortOrder="10"
+             module="Verfacto_Magento"
+             parent="Verfacto_Magento::integration"
+             action="verfacto_magento/integration/index"
+             resource="Verfacto_Magento::integration_verfacto"
+        />
+    </menu>
+</config>

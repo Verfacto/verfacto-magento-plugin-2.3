@@ -1,0 +1,21 @@
+<?php
+
+use Magento\Framework\View\Element\Template;
+use Verfacto\Magento\ViewModel\Link;
+
+/**
+ * @var Template $block
+ * @var Link $viewModel
+ */
+
+$viewModel = $block->getData('viewModel');
+?>
+
+<?php if ($trackingId = $viewModel->getTrackingId()): ?>
+    <script>
+        require(['jquery', 'verfacto-entry-point', 'domReady!'], function () {
+            window.VerfactoTracker.init('<?= $trackingId;?>');
+            window.VerfactoTracker.track("<?= $trackingId;?>", "go_to_checkout");
+        });
+    </script>
+<?php endif;?>
