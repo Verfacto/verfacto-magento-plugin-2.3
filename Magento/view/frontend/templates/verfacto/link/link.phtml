@@ -20,7 +20,7 @@ $viewModel = $block->getData('viewModel');
                 const cartBeforeUpdate = customerData.get('cart')();
                 let checkCustomerInterval = setInterval(function () {
                     const customerInfo = customerData.get('cart')();
-                    const productInfoArr = [];
+                    const productInfoArr = {};
                     let productType = '';
                     let qty = 1;
                     if (document.getElementById('qty')) {
@@ -39,7 +39,7 @@ $viewModel = $block->getData('viewModel');
                                     productInfoArr["sale_price"] = '';
                                     productInfoArr["quantity"] = qty;
                                     productInfoArr["sku"] = customerInfo.items[i].product_sku;
-                                    window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", JSON.stringify(Object.assign({}, productInfoArr)));
+                                    window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", productInfoArr);
                                     productType = 'grouped';
                                 } else if (customerInfo.items[i].qty !== cartBeforeUpdate.items[i].qty) {
                                     productInfoArr["name"] = customerInfo.items[i].product_name;
@@ -62,7 +62,7 @@ $viewModel = $block->getData('viewModel');
                                     productInfoArr["sale_price"] = '';
                                     productInfoArr["quantity"] = qty;
                                     productInfoArr["sku"] = customerInfo.items[i].product_sku;
-                                    window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", JSON.stringify(Object.assign({}, productInfoArr)));
+                                    window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", productInfoArr);
                                     productType = 'grouped';
                                 } else if (customerInfo.items[i].product_type === 'bundle' &&
                                     data.productIds.includes(customerInfo.items[i].product_id)) {
@@ -86,7 +86,7 @@ $viewModel = $block->getData('viewModel');
                         }
                         console.log(productInfoArr);
                         if (productType !== 'grouped') {
-                            window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", JSON.stringify(Object.assign({}, productInfoArr)));
+                            window.VerfactoTracker.track("<?= $trackingId;?>", "add_to_basket", productInfoArr);
                         }
                         clearInterval(checkCustomerInterval);
                     }
