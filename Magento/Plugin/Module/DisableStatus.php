@@ -60,9 +60,6 @@ class DisableStatus
     {
         $accountDetails = $this->link->getActiveAccount();
         if (is_array($accountDetails) && !empty($accountDetails)) {
-            $tokenData = $this->requestsProcessor->signInAccount($accountDetails['name'], $accountDetails['password'], $accountDetails['email']);
-            $this->requestsProcessor->disableModuleVerfacto($accountDetails['account_id'], $tokenData);
-
             /* Check if tracking id exists and enabled */
             $trackingCollection = $this->trackingCollectionFactory->create()
                 ->addFieldToFilter('is_enabled', 1);
